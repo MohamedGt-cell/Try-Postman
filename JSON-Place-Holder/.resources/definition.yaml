@@ -1,0 +1,15 @@
+$kind: collection
+description: ""
+variables:
+  - key: token
+    secret: true
+    disabled: false
+  - key: baseUrl
+    value: https://simple-books-api.click
+    disabled: false
+  - key: orderId
+    value: ""
+    disabled: false
+  - key: num
+    value: ""
+    disabled: false
