@@ -1,0 +1,56 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/orders"
+  method: GET
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    content-type: application/json
+    content-length: "453"
+    connection: keep-alive
+    date: Mon, 31 Aug 2026 14:17:48 GMT
+    x-amzn-trace-id: Root=1-6a958d0c-2c029f1c0f997b750e4f4e26;Parent=5912b578c0b7f5ca;Sampled=0;Lineage=1:9ee0f5ed:0
+    x-amzn-requestid: 9873ea2c-1ed8-487e-a55d-a4db707771a5
+    access-control-allow-origin: "*"
+    access-control-allow-headers: Content-Type, Authorization, X-Amz-Date, X-Api-Key, X-Amz-Security-Token
+    x-amz-apigw-id: C-L6FHkdoAMEMgg=
+    access-control-allow-methods: GET, POST, PUT, DELETE, OPTIONS, PATCH
+    x-cache: Miss from cloudfront
+    via: 1.1 83bea5c51abed1c57b3384765fa1d81c.cloudfront.net (CloudFront)
+    x-amz-cf-pop: MAD56-P5
+    x-amz-cf-id: QNzuBLCuD7NL0eCmgOz0eZ2BHzdhLo5cFI9fOv_1fQhVbJf8kFAxmg==
+  body:
+    type: json
+    content: |-
+      [
+        {
+          "id": "6TyuZTs0697emRFv9oPkg",
+          "bookId": 3,
+          "customerName": "Wunsch Mohammed",
+          "quantity": 1,
+          "timestamp": 1788005767388
+        },
+        {
+          "id": "_gMwIOYntDjajgPXDKHZ_",
+          "bookId": 3,
+          "customerName": "Essie Gorczany",
+          "quantity": 1,
+          "timestamp": 1788006083682
+        },
+        {
+          "id": "eerQOPHFDR-5pTPqsLVe1",
+          "bookId": 3,
+          "customerName": "Kevin Beier",
+          "quantity": 1,
+          "timestamp": 1788174218023
+        },
+        {
+          "id": "wEuiRu1J7WXMU71ztXdK-",
+          "bookId": 3,
+          "customerName": "Michael Reynolds",
+          "quantity": 1,
+          "timestamp": 1788171670130
+        }
+      ]
+order: 1000

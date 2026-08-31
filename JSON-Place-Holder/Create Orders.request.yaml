@@ -1,0 +1,37 @@
+$kind: http-request
+url: "{{baseUrl}}/orders"
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"bookId\":3,\r
+
+    \    \"customerName\":\"{{$randomFullName}}\"\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: "{{token}}"
+scripts:
+  - type: afterResponse
+    code: "const response = pm.response.json();\r
+
+      pm.test(\"One order created\",()=>pm.expect(pm.response).to.have.status(201));\r
+
+      try{\r
+
+      \    pm.expect(pm.response).to.have.status(201);\r
+
+      \    num =Number( pm.collectionVariables.get(\"num\") +1);\r
+
+      \    pm.collectionVariables.set(\"num\",num);\r
+
+      } catch(error){\r
+
+      \    console.log(\"Creation Failed!\")\r
+
+      }"
+    language: text/javascript
+order: 3000

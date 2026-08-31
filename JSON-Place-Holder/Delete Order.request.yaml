@@ -1,0 +1,30 @@
+$kind: http-request
+url: "{{baseUrl}}/orders/:orderId"
+method: DELETE
+pathVariables:
+  orderId: "{{orderId}}"
+auth:
+  type: bearer
+  credentials:
+    token: "{{token}}"
+scripts:
+  - type: afterResponse
+    code: "rs = pm.response.text();\r
+
+      \r
+
+      pm.test(\"Successfully Deleted\",() => pm.expect(pm.response).to.have.status(204));\r
+
+      if (pm.response.code === 204){\r
+
+      \    pm.collectionVariables.set(\"orderId\",0);\r
+
+      \    g = Number(pm.collectionVariables.get(\"num\"))-1;\r
+
+      \    pm.collectionVariables.set(\"num\",g);\r
+
+      \    pm.execution.setNextRequest(\"Current Orders\");\r
+
+      }\r\n"
+    language: text/javascript
+order: 6000

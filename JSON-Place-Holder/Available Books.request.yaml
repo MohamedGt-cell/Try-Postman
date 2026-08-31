@@ -1,0 +1,42 @@
+$kind: http-request
+url: "{{baseUrl}}/books"
+method: GET
+scripts:
+  - type: afterResponse
+    code: "const response = pm.response.json();\r
+
+      st=pm.response.code === 200;\r
+
+      pm.test(\"OK\",()=>pm.expect(pm.response).to.have.status(200))\r
+
+      \r
+
+      if (st){\r
+
+      availablebooks = response.filter((book) => book.available === true);\r
+
+      pm.test(\"There is: \"+availablebooks.length+ \" available books\",()=> {\r
+
+      \    pm.expect(availablebooks.length).to.be.above(0);\r
+
+      })\r
+
+      if (availablebooks.length < 1){\r
+
+      \    pm.execution.setNextRequest(\"Current Orders\");\r
+
+      }\r
+
+      }\r
+
+      \r
+
+      else {\r
+
+      \    pm.execution.setNextRequest(null);\r
+
+      }\r
+
+      \r\n"
+    language: text/javascript
+order: 2000

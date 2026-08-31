@@ -1,0 +1,22 @@
+$kind: http-request
+url: "{{baseUrl}}/status"
+method: GET
+scripts:
+  - type: afterResponse
+    code: "rs = pm.response.json();\r
+
+      pm.test(\"The API is ready!\",()=>{pm.expect(pm.response).to.have.status(200)});\r
+
+      try{\r
+
+      \    pm.expect(pm.response).to.have.status(200);\r
+
+      }catch{\r
+
+      \    console.log(\"API Failed\");\r
+
+      \    pm.execution.setNextRequest(null);\r
+
+      }"
+    language: text/javascript
+order: 1000

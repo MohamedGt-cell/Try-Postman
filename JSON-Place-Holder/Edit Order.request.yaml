@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{baseUrl}}/orders/:orderId"
+method: PATCH
+pathVariables:
+  orderId: "{{orderId}}"
+body:
+  type: json
+  content: "{\r
+
+    \    \"customerName\": \"{{$randomLastName}} Mohammed\"\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: "{{token}}"
+scripts:
+  - type: afterResponse
+    code: "st = pm.response.code;\r
+
+      pm.test(\"Successful Edit\", function () {pm.expect(st).to.equal(204);});\r\n"
+    language: text/javascript
+order: 5000

@@ -1,0 +1,143 @@
+$kind: http-request
+url: "{{baseUrl}}/orders"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{token}}"
+scripts:
+  - type: afterResponse
+    code: "const status = !(pm.response.code < 200 || pm.response.code >= 300)\r
+
+      pm.test(\"Valid response\", () => pm.expect(status).to.be.true)\r
+
+      if (!status){\r
+
+      \    return;\r
+
+      }\r
+
+      try{\r
+
+      \    //Valid JSON\r
+
+      \    pm.expect(JSON.parse(pm.response.text())).to.be.an('array')\r
+
+      \    pm.test(\"Response body is valid JSON\", () => {})\r
+
+      \    response=pm.response.json();\r
+
+      \    //Schema\r
+
+      \    schema={\r
+
+      \        type: \"array\",\r
+
+      \        items:{\r
+
+      \            type: \"object\",\r
+
+      \            properties: {\r
+
+      \                id: {\r
+
+      \                    type: \"string\",\r
+
+      \                    pattern: \"^[A-Za-z0-9-_]{21}$\"\r
+
+      \                },\r
+
+      \                quantity:{\r
+
+      \                    type: \"integer\",\r
+
+      \                },\r
+
+      \                bookId:{\r
+
+      \                    type: \"number\"\r
+
+      \                },\r
+
+      \                customerName: {\r
+
+      \                    type: \"string\"\r
+
+      \                },\r
+
+      \                timestamp: {\r
+
+      \                    type: \"number\"\r
+
+      \                },\r
+
+      \                \r
+
+      \            },\r
+
+      \            required: [\"id\", \"quantity\", \"timestamp\",\"bookId\",\"customerName\"],\r
+
+      \            additionalProperties: false\r
+
+      \        }\r
+
+      \    }\r
+
+      \    try{\r
+
+      \        //Test Schema\r
+
+      \        pm.expect(response).to.have.jsonSchema(schema)\r
+
+      \        //Stop() if 0\r
+
+      \        if (response.length === 0){\r
+
+      \            pm.collectionVariables.set(\"num\",0)\r
+
+      \            pm.collectionVariables.set(\"orderId\", 0)\r
+
+      \            pm.test(`Valid orders list with ${0} orders`, () => { })\r
+
+      \            pm.execution.setNextRequest(null)\r
+
+      \        }\r
+
+      \        //their is correct orders\r
+
+      \        else{\r
+
+      \            let num=0;\r
+
+      \            for (order of response){\r
+
+      \                num= num + Number(order.quantity)\r
+
+      \            }\r
+
+      \            pm.test(`Valid orders list with ${num} orders`, () => { })\r
+
+      \            pm.collectionVariables.set(\"num\",num)\r
+
+      \            pm.collectionVariables.set(\"orderId\", response[0].id)\r
+
+      \        }\r
+
+      \    }\r
+
+      \    catch (err){\r
+
+      \        pm.test(\"Valid orders list\",()=>{throw err})\r
+
+      \    }\r
+
+      }\r
+
+      catch(e){\r
+
+      \    pm.test(\"Response body is valid JSON\", () => {throw e})\r
+
+      }"
+    language: text/javascript
+examples: ./.resources/Current Orders.resources/examples
+order: 4000
