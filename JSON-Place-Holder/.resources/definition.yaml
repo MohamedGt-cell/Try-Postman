@@ -1,7 +1,7 @@
 $kind: collection
 description: ""
 variables:
-  token: 441f5adbbb3abf172d7e4e75325ddcc395bd823dfe65f6e835ca35511f5b2c08
+  token: {token}
   baseUrl: https://simple-books-api.click
   orderId: ""
   num: ""
